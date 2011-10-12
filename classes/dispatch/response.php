@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Dispatch
+ * Dispatch Response
  * 
  * @package		Dispatch
  * @category	Base
@@ -8,4 +8,4 @@
  * @copyright	(c) 2011 Micheal Morgan
  * @license		MIT
  */
-class Dispatch extends Kohana_Dispatch {}
+class Dispatch_Response extends Kohana_Dispatch_Response {}
