@@ -12,6 +12,51 @@
 class Kohana_DispatchTest extends Unittest_TestCase
 {
 	/**
+	 * Provider for test_path
+	 *
+	 * @access	public
+	 * @return	array
+	 */
+	public static function provider_path()
+	{
+		return array
+		(
+			array
+			(
+				array('user', 2, 'email', 5),
+				'user/2/email/5'
+			),
+			array
+			(
+				'account/3/user/2',
+				'account/3/user/2'
+			)
+		);
+	}	
+	
+	/**
+	 * Test path handling
+	 * 
+	 * @covers			Dispatch::factory
+	 * @covers			Dispatch_Request::path
+	 * @dataProvider	provider_path
+	 * @access			public
+	 * @return			void
+	 */
+	public function test_path($provided, $expected)
+	{
+		// Test Dispatch::factory
+		$this->assertSame(Dispatch::factory($provided)->path(), $expected);
+
+		// Test Dispatch_Request::path
+		$dispatch = new Dispatch_Request;
+		
+		$dispatch->path($provided);
+		
+		$this->assertSame($dispatch->path(), $expected);
+	}
+	
+	/**
 	 * Internal and external configuration to test consistency across 
 	 * Client-Dispatcher-Server pattern.
 	 *
