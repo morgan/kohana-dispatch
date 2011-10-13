@@ -59,9 +59,17 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	 */
 	public function loaded()
 	{
-		return (bool) $this->_response;
+		if ($this->_response instanceof Response)
+		{
+			$status = $this->_response->status();
+			
+			if ($status >= 200 && $status <= 300)
+				return TRUE;
+		}
+		
+		return FALSE;
 	}
-	
+
 	/**
 	 * Return Response as array
 	 * 

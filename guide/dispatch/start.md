@@ -1,6 +1,6 @@
 # Getting Started
 
-Dispatch is intended to be the "query builder" of REST services. Its not an ORM.
+Dispatch is intended to be the "query builder" for REST services in Kohana.
 
 ## Basic Usage
 

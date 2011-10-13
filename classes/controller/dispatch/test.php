@@ -102,7 +102,7 @@ class Controller_Dispatch_Test extends Controller
 	 * @param	array
 	 * @return	void
 	 */
-	protected function _render($data, $status = 200)
+	protected function _render($data)
 	{
 		$data = ( ! is_array($data)) ? array('message' => (string) $data) : $data;
 		
@@ -118,10 +118,12 @@ class Controller_Dispatch_Test extends Controller
 				$this->response->headers('content-type', 'application/php');
 				break;
 		}		
+
+		$status = ($code = $this->request->query('code')) ? $code : 200;
 		
 		$this->response
 			->status($status)
-			//->headers('cache-control', 'no-cache, no-store, max-age=0, must-revalidate')
+			->headers('cache-control', 'no-cache, no-store, max-age=0, must-revalidate')
 			->body($data);
 	}	
 }

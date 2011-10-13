@@ -4,7 +4,8 @@ SOA REST client supporting internal and remote services.
 
 ## Getting Started
 
-Recommend starting out with Dispatch documentation locally using the User Guide module.
+Recommend starting out with Dispatch documentation using the User Guide module or available 
+online at http://dev.morgan.ly/kohana/3.2/guide/dispatch/.
 
 ## Learning & References
 

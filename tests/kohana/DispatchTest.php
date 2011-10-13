@@ -12,6 +12,41 @@
 class Kohana_DispatchTest extends Unittest_TestCase
 {
 	/**
+	 * Default connection config
+	 * 
+	 * @access	protected
+	 * @var		array
+	 */
+	protected $_config = array
+	(
+		'namespace'		=> 'dispatch',
+		'extension'		=> 'json',
+		'attempt_local'	=> TRUE
+	);
+	
+	/**
+	 * Tests HTTP code handling
+	 * 
+	 * @covers	Dispatch::factory
+	 * @covers	Dispatch_Request::factory
+	 * @covers	Dispatch_Response::factory
+	 * @covers	Dispatch_Request::where
+	 * @covers	Dispatch_Response::loaded
+	 * @access	public
+	 * @return	void
+	 */	
+	public function test_http_code()
+	{
+		$dispatch = Dispatch::factory('test', NULL, $this->_config);
+
+		$this->assertTrue($dispatch->find()->loaded(), 'Expecting Test resource to have loaded.');
+		
+		$dispatch->where('code', 500);
+		
+		$this->assertFalse($dispatch->find()->loaded(), 'Invalid HTTP code should not validate as a loaded resource.');
+	}	
+	
+	/**
 	 * Data provider for Request
 	 *
 	 * @access	public
@@ -46,6 +81,11 @@ class Kohana_DispatchTest extends Unittest_TestCase
 	/**
 	 * Tests request
 	 * 
+	 * @covers			Dispatch::factory
+	 * @covers			Dispatch_Request::factory
+	 * @covers			Dispatch_Response::factory
+	 * @covers			Dispatch_Request::execute
+	 * @covers			Dispatch_Response::loaded
 	 * @dataProvider	provider_request
 	 * @access			public
 	 * @return			void
