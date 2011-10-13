@@ -1,6 +1,6 @@
 # Dispatch Module
 
-SOA REST client supporting internal and remote services.
+REST client supporting internal and external services.
 
 ## Getting Started
 
