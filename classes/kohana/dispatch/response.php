@@ -116,7 +116,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	protected function _filter_response(Response $response)
 	{
 		// Check if access is available for pass-through
-		if (method_exists('get_body', $response) && $body = $response->get_body())
+		if (method_exists($response, 'get_body') && $body = $response->get_body())
 		{
 			if (is_array($body))
 				return $body;
