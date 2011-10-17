@@ -115,14 +115,18 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	 */
 	protected function _filter_response(Response $response)
 	{
-		if ($body = $response->body())
+		// Check if access is available for pass-through
+		if (method_exists('get_body', $response) && $body = $response->get_body())
 		{
 			if (is_array($body))
 				return $body;
 			
 			if ($body instanceof Dataflow)
 				return $body->get()->as_array();
-			
+		}
+		
+		if ($body = $response->body())
+		{
 			switch ($response->headers('Content-Type'))
 			{
 				case 'application/json':

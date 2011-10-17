@@ -105,11 +105,11 @@ class Kohana_DispatchTest extends Unittest_TestCase
 	{
 		$dispatch = Dispatch::factory('test', NULL, $config);
 
-		$this->assertTrue($dispatch->find()->loaded(), 'Expecting Test resource to have loaded.');
+		$this->assertTrue($dispatch->find()->loaded(), 'Expecting resource to have loaded.');
 		
 		$dispatch->where('code', 500);
 		
-		$this->assertFalse($dispatch->find()->loaded(), 'Invalid HTTP code should not validate as a loaded resource.');
+		$this->assertFalse($dispatch->find()->loaded(), 'Invalid HTTP status code should not validate as a loaded resource.');
 	}	
 	
 	/**
