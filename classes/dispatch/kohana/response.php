@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Refactor to Response to allow for body to pass-through without being casted to a string. This 
+ * Refactor of Response to allow for body to pass-through without being casted to a string. This 
  * allows for setting and getting objects (that are to be casted to strings) for use in sub requests.
  * 
  * Response wrapper. Created as the result of any [Request] execution
@@ -19,7 +19,7 @@ class Dispatch_Kohana_Response extends Kohana_Response
 	/**
 	 * Get raw body
 	 * 
-	 * Seperate call to keep Response::body consistant with unit tests.
+	 * Separate call to keep Response::body consistent with unit tests.
 	 * 
 	 * @access	public
 	 * @return	mixed
@@ -52,16 +52,5 @@ class Dispatch_Kohana_Response extends Kohana_Response
 		$this->_body = $content;
 		
 		return $this;
-	}
-
-	/**
-	 * Returns the length of the body for use with
-	 * content header
-	 *
-	 * @return  integer
-	 */
-	public function content_length()
-	{
-		return strlen((string) $this->body());
 	}
 }

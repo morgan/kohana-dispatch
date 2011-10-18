@@ -107,15 +107,17 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	/**
 	 * Filter Response
 	 * 
-	 * @todo	Detect empty body and return empty array
-	 * @todo	Detect Dataflow module and map driver based on Content-Type.
+	 * @todo	Detect Dataflow module and map driver based on Content-Type for decoding
+	 * 			body string.
 	 * @access	protected
 	 * @param	Request
 	 * @return	array|Response
+	 * @throws	Kohana_Exception
 	 */
 	protected function _filter_response(Response $response)
 	{
-		// Check if access is available for pass-through
+		// Check if Response::get_body exists for pass-through detection
+		// Prevents unnecessary encoding and decoding for internal requests (when available)
 		if (method_exists($response, 'get_body') && $body = $response->get_body())
 		{
 			if (is_array($body))
@@ -125,21 +127,33 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 				return $body->get()->as_array();
 		}
 		
-		if ($body = $response->body())
-		{
-			switch ($response->headers('Content-Type'))
-			{
-				case 'application/json':
-					return json_decode($body, TRUE);
-					
-				case 'application/php':
-					return unserialize($body);
-			}
-			
-			throw new Kohana_Exception('Unable to parse Response. Unsupported Content-Type: ' . $response->headers('Content-Type'));
-		}
+		$body = $response->body();
 		
-		return $response;
+		// No need to decode an empty body, simply return array
+		if (trim($body) == '' OR ! $body)
+			return array();			
+		
+		$type = $response->headers('Content-Type');	
+			
+		if ($type && class_exists('Dataflow') && $driver = Dataflow::content_driver($type))
+		{
+			$input = Dataflow_Input::factory(array('driver' => $driver))->set($body);
+			
+			return $input->get();
+		}	
+			
+		// Basic native decoding based on Content-Type header
+		switch ($type)
+		{
+			case 'application/json':
+				return json_decode($body, TRUE);
+				
+			case 'application/php':
+				return unserialize($body);
+		}
+
+		// If unable to parse Response, throw exception
+		throw new Kohana_Exception('Unable to parse Response. Unsupported Content-Type: ' . $response->headers('Content-Type'));
 	}
 		
 	/**
