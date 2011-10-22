@@ -111,7 +111,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	 * 			body string.
 	 * @access	protected
 	 * @param	Request
-	 * @return	array|Response
+	 * @return	array
 	 * @throws	Kohana_Exception
 	 */
 	protected function _filter_response(Response $response)
@@ -133,27 +133,32 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 		if (trim($body) == '' OR ! $body)
 			return array();			
 		
-		$type = $response->headers('Content-Type');	
-			
-		if ($type && class_exists('Dataflow') && $driver = Dataflow::content_driver($type))
+		// Get MIME
+		$mime = current(explode(';', $response->headers('Content-Type')));	
+
+		if ($mime && class_exists('Dataflow') && $driver = File::ext_by_mime($mime))
 		{
-			$input = Dataflow_Input::factory(array('driver' => $driver))->set($body);
-			
-			return $input->get();
+			try
+			{
+				return Dataflow_Decode::factory(array('driver' => $driver))
+					->set($body)
+					->get();
+			}
+			catch (Kohana_Exception $e) {}
 		}	
 			
 		// Basic native decoding based on Content-Type header
-		switch ($type)
+		switch ($mime)
 		{
 			case 'application/json':
 				return json_decode($body, TRUE);
 				
-			case 'application/php':
+			case 'application/x-httpd-php':
 				return unserialize($body);
 		}
 
 		// If unable to parse Response, throw exception
-		throw new Kohana_Exception('Unable to parse Response. Unsupported Content-Type: ' . $response->headers('Content-Type'));
+		throw new Kohana_Exception('Unable to parse Response. Unsupported MIME: ' . $mime);
 	}
 		
 	/**

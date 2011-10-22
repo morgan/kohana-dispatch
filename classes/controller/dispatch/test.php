@@ -115,7 +115,7 @@ class Controller_Dispatch_Test extends Controller
 				
 			case 'php':
 				$data = serialize($data);
-				$this->response->headers('content-type', 'application/php');
+				$this->response->headers('content-type', 'application/x-httpd-php');
 				break;
 		}		
 

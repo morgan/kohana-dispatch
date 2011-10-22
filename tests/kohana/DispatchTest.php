@@ -3,6 +3,7 @@
  * Tests Dispatch Module
  *
  * @see			Controller_Dispatch_Test
+ * @group		dispatch
  * @package		Dispatch
  * @category	Tests
  * @author		Micheal Morgan <micheal@morgan.ly>

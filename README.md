@@ -1,6 +1,12 @@
 # Dispatch Module
 
-REST client supporting internal and external services.
+REST client for Kohana. 
+
+- Consistent API for consuming REST services
+- Uses Client-Dispatcher-Server pattern for internal and external requests
+- Built-in Response filtering for basic support of JSON and PHP
+- Optional support of [Dataflow](https://github.com/michealmorgan/kohana-dataflow) module for 
+expanded response parsing (XML, YAML, JSON, PHP)
 
 ## Getting Started
 
