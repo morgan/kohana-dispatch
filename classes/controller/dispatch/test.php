@@ -106,24 +106,17 @@ class Controller_Dispatch_Test extends Controller
 	{
 		$data = ( ! is_array($data)) ? array('message' => (string) $data) : $data;
 		
-		switch ($this->request->param('format'))
-		{
-			case 'json':
-				$data = json_encode($data);
-				$this->response->headers('content-type', 'application/json');
-				break;
-				
-			case 'php':
-				$data = serialize($data);
-				$this->response->headers('content-type', 'application/x-httpd-php');
-				break;
-		}		
-
+		$model = Model::factory('dispatch_test')
+			->format($this->request->param('format'))
+			->set($data);
+		
+		$this->response->headers('content-type', File::mime_by_ext($this->request->param('format')));	
+			
 		$status = ($code = $this->request->query('code')) ? $code : 200;
 		
 		$this->response
 			->status($status)
 			->headers('cache-control', 'no-cache, no-store, max-age=0, must-revalidate')
-			->body($data);
-	}	
+			->body($model);
+	}
 }

@@ -107,8 +107,6 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	/**
 	 * Filter Response
 	 * 
-	 * @todo	Detect Dataflow module and map driver based on Content-Type for decoding
-	 * 			body string.
 	 * @access	protected
 	 * @param	Request
 	 * @return	array

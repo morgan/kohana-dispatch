@@ -2,11 +2,12 @@
 
 REST client for Kohana. 
 
-- Consistent API for consuming REST services
+- Consistent API for consuming REST services in Kohana
 - Uses Client-Dispatcher-Server pattern for internal and external requests
 - Built-in Response filtering for basic support of JSON and PHP
 - Optional support of [Dataflow](https://github.com/michealmorgan/kohana-dataflow) module for 
 expanded response parsing (XML, YAML, JSON, PHP)
+- Response pass-through for interal requests allows prevents unneeded encoding and decoding
 
 ## Getting Started
 

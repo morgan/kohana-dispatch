@@ -5,3 +5,5 @@
 - Internal requests have an option for failover to external
 - User Guide documentation
 - Unit Test coverage with sample `Controller_Dispatch_Test` reflection service
+- Internal requests support pass-through allowing for access to Response body before being casted 
+to a string. This prevents unneeded encoding and decoding.
