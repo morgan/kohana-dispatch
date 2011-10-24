@@ -122,7 +122,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 				return $body;
 			
 			if ($body instanceof Dataflow)
-				return $body->get()->as_array();
+				return $body->as_array();
 		}
 		
 		$body = $response->body();

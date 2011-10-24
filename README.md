@@ -1,6 +1,6 @@
 # Dispatch Module
 
-REST client for Kohana. 
+A REST client for Kohana. 
 
 - Consistent API for consuming REST services in Kohana
 - Uses Client-Dispatcher-Server pattern for internal and external requests
