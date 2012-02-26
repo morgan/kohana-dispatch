@@ -1,4 +1,4 @@
-# 0.2.0
+# 0.2.0 - 2/25/2012
 
 - Created new `Dispatch_Connection` class for reusing core request configuration across requests.
 - Refactored `Dispatch::factory` and `Dispatch_Request` to take connections into consideration.

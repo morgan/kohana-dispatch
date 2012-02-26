@@ -22,4 +22,4 @@ online at http://dev.morgan.ly/kohana/v3.2/guide/dispatch/.
 
 ## Version 0.2.0
 
-This is release version 0.2.0 of [Dispatch](https://github.com/michealmorgan/kohana-dispatch). See [Changelog](CHANGELOG.md).
+This is release version 0.2.0 of [Dispatch](https://github.com/michealmorgan/kohana-dispatch).
