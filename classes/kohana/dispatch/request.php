@@ -9,25 +9,7 @@
  * @license		MIT
  */
 class Kohana_Dispatch_Request
-{	
-	/**
-	 * Default connection config `dispatch.default`
-	 * 
-	 * @static
-	 * @access	public
-	 * @var		string
-	 */
-	public static $connection = 'default';
-	
-	/**
-	 * Default external client
-	 * 
-	 * @static
-	 * @access	public
-	 * @var		string
-	 */
-	public static $external_client = 'Request_Client_Curl';
-	
+{
 	/**
 	 * Path to controller
 	 * 
@@ -53,18 +35,20 @@ class Kohana_Dispatch_Request
 	protected $_data = array();
 	
 	/**
-	 * Configuration
+	 * Headers
 	 * 
 	 * @access	protected
 	 * @var		array
 	 */
-	protected $_config = array
-	(
-		'url'			=> NULL,
-		'extension'		=> NULL,
-		'namespace'		=> NULL,
-		'attempt_local'	=> TRUE
-	);
+	protected $_headers = array();
+
+	/**
+	 * Connection
+	 * 
+	 * @access	protected
+	 * @var		Dispatch_Connection
+	 */
+	protected $_connection;
 	
 	/**
 	 * Factory pattern
@@ -74,27 +58,35 @@ class Kohana_Dispatch_Request
 	 * @param	array
 	 * @return	Dispatch_Request
 	 */
-	public static function factory($connection = NULL, array $config = array())
+	public static function factory()
 	{		
-		$connection = $connection ? strtolower($connection) : Dispatch_Request::$connection;
-
-		$config = $config + Kohana::$config->load('dispatch.' . $connection);
-		
-		return new Dispatch_Request($config);
+		return new Dispatch_Request;
 	}
 
 	/**
-	 * Initialization
+	 * Get or set connection
 	 * 
 	 * @access	public
-	 * @param	array
-	 * @return	void
+	 * @param	mixed	NULL|Dispatch_Connection
+	 * @return	Dispatch_Connection
 	 */
-	public function __construct(array $config = array())
-	{		
-		$this->_config = $config + $this->_config;
+	public function connection(Dispatch_Connection $connection = NULL)
+	{
+		if ($connection === NULL)
+		{
+			if ($this->_connection === NULL)
+			{
+				$this->_connection = Dispatch_Connection::instance();
+			}
+		}
+		else
+		{
+			$this->_connection = $connection;
+		}
+		
+		return $this->_connection;
 	}
-
+	
 	/**
 	 * Getter and setter for path
 	 * 
@@ -224,6 +216,30 @@ class Kohana_Dispatch_Request
 	}
 	
 	/**
+	 * Get or set headers
+	 * 
+	 * @access	public
+	 * @param	mixed	NULL|string
+	 * @param	mixed
+	 * @return	mixed
+	 */
+	public function headers($key = NULL, $value = NULL)
+	{
+		if ($key === NULL)
+			return $this->_headers;
+			
+		if (is_array($key))
+		{
+			$this->_headers = $key;
+		}
+			
+		$this->_headers[$key] = $value;
+		
+		return $this;
+	}
+	
+	
+	/**
 	 * Request
 	 * 
 	 * @access	public
@@ -231,52 +247,6 @@ class Kohana_Dispatch_Request
 	 */
 	public function execute($method = Request::GET)
 	{
-		$response = FALSE;
-		
-		$namespace = $this->_config['namespace'] ? $this->_config['namespace'] . '/' : NULL; 
-		
-		if ($this->_config['attempt_local'])
-		{	
-			$response = $this->_request($namespace . $this->_path, $method);
-		}
-		
-		if ( ! $response)
-		{
-			$response = $this->_request($this->_config['url'] . $namespace . $this->_path, $method, TRUE);
-		}
-
-		return Dispatch_Response::factory($response);
-	}
-	
-	/**
-	 * Generate request
-	 * 
-	 * @access	protected
-	 * @param	string
-	 * @return	Response|FALSE
-	 */
-	protected function _request($path, $method, $external = FALSE)
-	{
-		try
-		{
-			$query = ( ! empty($this->_query)) ? '?' . http_build_query($this->_query, NULL, '&') : NULL;
-
-			$extension = ($this->_config['extension'] !== NULL) ? '.' . $this->_config['extension'] : NULL;
-				
-			$request = Request::factory($path . $extension . $query)
-				->method($method)
-				->post($this->get());
-			
-			if ($external)
-			{
-				$request->client(Request_Client_External::factory(array(), Dispatch_Request::$external_client));
-			}	
-				
-			return $request->execute();
-		}
-		catch (HTTP_Exception_404 $e) 
-		{
-			return FALSE;
-		}
+		return $this->connection()->execute($this->path(), $method, $this->_query, $this->_data, $this->_headers);
 	}
 }

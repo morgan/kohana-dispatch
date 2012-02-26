@@ -19,8 +19,20 @@ class Kohana_Dispatch
 	 * @param	string	Config key
 	 * @return	Dispatch_Request
 	 */
-	public function factory($path, $connection = NULL, array $config = array())
+	public function factory($path = NULL, Dispatch_Connection $connection = NULL)
 	{
-		return Dispatch_Request::factory($connection, $config)->path($path);
+		$request = Dispatch_Request::factory();
+		
+		if ($path)
+		{
+			$request->path($path);
+		}
+		
+		if ($connection)
+		{
+			$request->connection($connection);
+		}
+		
+		return $request;
 	}
 }

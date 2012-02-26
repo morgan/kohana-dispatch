@@ -1,4 +1,11 @@
-# 0.1.0
+# 0.2.0
+
+- Created new `Dispatch_Connection` class for reusing core request configuration across requests.
+- Refactored `Dispatch::factory` and `Dispatch_Request` to take connections into consideration.
+- Updated unit tests to use `Dispatch_Connection::factory`. 
+- All tests pass "OK (7 tests, 18 assertions)"
+
+# 0.1.0 - 10/23/2011
 
 - Initial release of Dispatch
 - Support for internal or external requests

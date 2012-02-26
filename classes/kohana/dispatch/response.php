@@ -144,7 +144,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 			}
 			catch (Kohana_Exception $e) {}
 		}	
-			
+
 		// Basic native decoding based on Content-Type header
 		switch ($mime)
 		{

@@ -62,10 +62,8 @@ class Kohana_DispatchTest extends Unittest_TestCase
 		$this->assertSame(Dispatch::factory($provided)->path(), $expected);
 
 		// Test Dispatch_Request::path
-		$dispatch = new Dispatch_Request;
-		
-		$dispatch->path($provided);
-		
+		$dispatch = Dispatch_Request::factory()->path($provided);
+
 		$this->assertSame($dispatch->path(), $expected);
 	}
 	
@@ -116,7 +114,7 @@ class Kohana_DispatchTest extends Unittest_TestCase
 	 */	
 	public function test_http_code($config)
 	{
-		$dispatch = Dispatch::factory('test', NULL, $config);
+		$dispatch = Dispatch::factory('test', Dispatch_Connection::factory($config));
 
 		$this->assertTrue($dispatch->find()->loaded(), 'Expecting resource to have loaded.');
 		
@@ -136,7 +134,7 @@ class Kohana_DispatchTest extends Unittest_TestCase
 	 */
 	public function test_pass_through()	
 	{
-		$dispatch = Dispatch::factory('test', NULL, $this->_config + array('attempt_local' => TRUE));
+		$dispatch = Dispatch::factory('test', Dispatch_Connection::factory($this->_config + array('attempt_local' => TRUE)));
 		
 		$result = $dispatch->execute();
 		
@@ -163,9 +161,11 @@ class Kohana_DispatchTest extends Unittest_TestCase
 	{
 		$methods = array(Request::GET, Request::POST, Request::PUT, Request::DELETE);
 
+		$connection = Dispatch_Connection::factory($config);
+		
 		foreach ($methods as $method)
 		{			
-			$dispatch = Dispatch::factory('test', NULL, $config);
+			$dispatch = Dispatch::factory('test', $connection);
 			
 			$response = $dispatch->execute($method);
 			
