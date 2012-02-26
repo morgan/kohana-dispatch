@@ -7,7 +7,7 @@ A REST client for Kohana.
 - Built-in Response filtering for basic support of JSON and PHP
 - Optional support of [Dataflow](https://github.com/michealmorgan/kohana-dataflow) module for 
 expanded response parsing (XML, YAML, JSON, PHP)
-- Response pass-through for interal requests allows prevents unneeded encoding and decoding
+- Response pass-through for internal requests allows prevents unneeded encoding and decoding
 
 ## Getting Started
 
@@ -20,6 +20,6 @@ online at http://dev.morgan.ly/kohana/v3.2/guide/dispatch/.
 - API Browser
 - Unit Tests
 
-## Version 0.1.0
+## Version 0.2.0
 
-This is the initial release version of [Dispatch](https://github.com/michealmorgan/kohana-dispatch).
+This is release version 0.2.0 of [Dispatch](https://github.com/michealmorgan/kohana-dispatch). See [Changelog](CHANGELOG.md).
