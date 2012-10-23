@@ -19,7 +19,7 @@ class Kohana_Dispatch
 	 * @param	string	Config key
 	 * @return	Dispatch_Request
 	 */
-	public function factory($path = NULL, Dispatch_Connection $connection = NULL)
+	public static function factory($path = NULL, Dispatch_Connection $connection = NULL)
 	{
 		$request = Dispatch_Request::factory();
 		
