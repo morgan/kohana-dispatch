@@ -1,2 +1,4 @@
 ## [Dispatch]()
- - [Getting Started](start)
+ - [The Basics](basics)
+ - [Dataflow](dataflow)
+ 

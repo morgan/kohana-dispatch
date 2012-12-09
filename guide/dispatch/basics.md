@@ -37,3 +37,4 @@ Dispatch is intended to be the "query builder" for REST services in Kohana.
 	$user = Dispatch::factory('user/1');
 	
 	$result = $user->delete();
+	
