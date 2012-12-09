@@ -16,7 +16,7 @@ class Kohana_Dispatch_Request
 	 * @access	protected
 	 * @var		NULL|string
 	 */
-	protected $_path;	
+	protected $_path;
 
 	/**
 	 * Data for query string

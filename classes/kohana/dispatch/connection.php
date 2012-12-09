@@ -58,12 +58,12 @@ class Kohana_Dispatch_Connection
 		$name = $name ? strtolower($name) : Dispatch_Connection::$default;
 
 		if ( ! isset($instances[$name]))
-		{		
+		{
 			$config = Arr::merge(Kohana::$config->load('dispatch.' . $name), $config);
 			
 			$instances[$name] = new Dispatch_Connection($config);
 		}
-			
+		
 		return $instances[$name];
 	}
 
@@ -105,7 +105,7 @@ class Kohana_Dispatch_Connection
 	{
 		if ($key === NULL)
 			return $this->_headers;
-			
+		
 		if (is_array($key))
 		{
 			$this->_headers = $key;
@@ -163,7 +163,7 @@ class Kohana_Dispatch_Connection
 
 			$request = Request::factory($path . $extension . $query)
 				->method($method);
-				
+			
 			if ( ! empty($body))
 			{
 				$request->post($body);
@@ -173,11 +173,11 @@ class Kohana_Dispatch_Connection
 			{
 				$request->headers($key, $value);
 			}
-				
+			
 			if ($external)
 			{
 				$request->client(Request_Client_External::factory(array(), $this->_config['external_client']));
-			}	
+			}
 
 			return $request->execute();
 		}
