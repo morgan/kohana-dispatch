@@ -7,12 +7,13 @@
  * or utility method (i.e. Redirect). Implements standard HTTP
  * response format.
  *
- * @package    Kohana
- * @category   Base
- * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
- * @license    http://kohanaphp.com/license
- * @since      3.1.0
+ * @package		Kohana
+ * @category	Base
+ * @author		Kohana Team
+ * @author		Micheal Morgan <micheal@morgan.ly>
+ * @copyright	(c) 2008-2012 Kohana Team
+ * @license		http://kohanaphp.com/license
+ * @since		3.1.0
  */
 class Dispatch_Kohana_Response extends Kohana_Response
 {

@@ -5,11 +5,11 @@
  * @package		Dispatch
  * @category	Base
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2011 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
 class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
-{	
+{
 	/**
 	 * Response
 	 * 
@@ -34,7 +34,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	 */
 	public static function factory($response)
 	{
-		return new Dispatch_Response($response);	
+		return new Dispatch_Response($response);
 	}
 	
 	/**
@@ -48,7 +48,9 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	{
 		$this->_response = $response;
 		
-		$this->_data = ($this->_response instanceof Response) ? $this->_filter_response($this->_response) : array();
+		$this->_data = ($this->_response instanceof Response) 
+			? $this->_filter_response($this->_response) 
+			: array();
 	}
 	
 	/**
@@ -116,7 +118,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	{
 		// Check if Response::get_body exists for pass-through detection
 		// Prevents unnecessary encoding and decoding for internal requests (when available)
-		if (method_exists($response, 'get_body') && $body = $response->get_body())
+		if (method_exists($response, 'get_body') AND $body = $response->get_body())
 		{
 			if (is_array($body))
 				return $body;
@@ -129,12 +131,12 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 		
 		// No need to decode an empty body, simply return array
 		if (trim($body) == '' OR ! $body)
-			return array();			
+			return array();
 		
 		// Get MIME
-		$mime = current(explode(';', $response->headers('Content-Type')));	
+		$mime = current(explode(';', $response->headers('Content-Type')));
 
-		if ($mime && class_exists('Dataflow') && $driver = File::ext_by_mime($mime))
+		if ($mime AND class_exists('Dataflow') AND $driver = File::ext_by_mime($mime))
 		{
 			try
 			{
@@ -143,7 +145,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 					->get();
 			}
 			catch (Kohana_Exception $e) {}
-		}	
+		}
 
 		// Basic native decoding based on Content-Type header
 		switch ($mime)
@@ -158,7 +160,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 		// If unable to parse Response, throw exception
 		throw new Kohana_Exception('Unable to parse Response. Unsupported MIME: ' . $mime);
 	}
-		
+	
 	/**
 	 * Isset
 	 * 
@@ -206,7 +208,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	public function current()
 	{
 		return current($this->_data);
-	}	
+	}
 	
 	/**
 	 * Key of current iteration
@@ -218,7 +220,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	public function key()
 	{
 		return key($this->_data);
-	}	
+	}
 	
 	/**
 	 * Next within the iteration
@@ -231,8 +233,8 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	{
 		next($this->_data);
 		
-		return $this;	
-	}	
+		return $this;
+	}
 	
 	/**
 	 * Valid iteration
@@ -243,8 +245,8 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	 */
 	public function valid()
 	{
-		return $this->offsetExists($this->key());	
-	}		
+		return $this->offsetExists($this->key());
+	}
 
 	/**
 	 * Exists
@@ -270,7 +272,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	public function offsetGet($key)
 	{
 		return $this->_data[$key];
-	}	
+	}
 	
 	/**
 	 * Set
@@ -285,7 +287,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	public function offsetSet($key, $value)
 	{
 		throw new Kohana_Exception('Dispatch results are read-only');
-	}	
+	}
 	
 	/**
 	 * Unset
@@ -299,7 +301,7 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	public function offsetUnset($key)
 	{
 		throw new Kohana_Exception('Dispatch results are read-only');
-	}	
+	}
 
 	/**
 	 * Count
@@ -311,5 +313,5 @@ class Kohana_Dispatch_Response implements Iterator, ArrayAccess, Countable
 	public function count()
 	{
 		return count($this->_data);
-	}	
+	}
 }

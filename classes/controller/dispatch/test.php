@@ -5,7 +5,7 @@
  * @package		Dispatch
  * @category	Base
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2011 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
 class Controller_Dispatch_Test extends Controller
@@ -32,7 +32,7 @@ class Controller_Dispatch_Test extends Controller
 			parse_str($this->request->body(), $post);
 		
 			$this->request->post($post);
-		}		
+		}
 	}
 	
 	/**
@@ -110,7 +110,7 @@ class Controller_Dispatch_Test extends Controller
 			->format($this->request->param('format'))
 			->set($data);
 		
-		$this->response->headers('content-type', File::mime_by_ext($this->request->param('format')));	
+		$this->response->headers('content-type', File::mime_by_ext($this->request->param('format')));
 			
 		$status = ($code = $this->request->query('code')) ? $code : 200;
 		
