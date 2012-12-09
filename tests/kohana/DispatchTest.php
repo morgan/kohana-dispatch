@@ -7,7 +7,7 @@
  * @package		Dispatch
  * @category	Tests
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2011 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
 class Kohana_DispatchTest extends Unittest_TestCase
@@ -120,7 +120,8 @@ class Kohana_DispatchTest extends Unittest_TestCase
 		
 		$dispatch->where('code', 500);
 		
-		$this->assertFalse($dispatch->find()->loaded(), 'Invalid HTTP status code should not validate as a loaded resource.');
+		$this->assertFalse($dispatch->find()->loaded(), 'Invalid HTTP status code should not 
+			validate as a loaded resource.');
 	}
 	
 	/**
@@ -134,13 +135,19 @@ class Kohana_DispatchTest extends Unittest_TestCase
 	 */
 	public function test_pass_through()	
 	{
-		$dispatch = Dispatch::factory('test', Dispatch_Connection::factory($this->_config + array('attempt_local' => TRUE)));
+		$dispatch_connection = Dispatch_Connection::factory
+		(
+			$this->_config + array('attempt_local' => TRUE)
+		);
+
+		$dispatch = Dispatch::factory('test', $dispatch_connection);
 		
 		$result = $dispatch->execute();
 		
 		$response = $result->get_response();
 		
-		$this->assertTrue(method_exists($response, 'get_body'), 'Dispatch_Kohana_Response is providing Response raw body.');
+		$this->assertTrue(method_exists($response, 'get_body'), 'Dispatch_Kohana_Response is 
+			providing Response raw body.');
 
 		$this->assertInstanceOf('Model_Dispatch_Test', $response->get_body());
 	}
@@ -164,7 +171,7 @@ class Kohana_DispatchTest extends Unittest_TestCase
 		$connection = Dispatch_Connection::factory($config);
 		
 		foreach ($methods as $method)
-		{			
+		{
 			$dispatch = Dispatch::factory('test', $connection);
 			
 			$response = $dispatch->execute($method);

@@ -5,7 +5,7 @@
  * @package		Dispatch
  * @category	Base
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2011 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
 class Kohana_Dispatch_Request
@@ -16,7 +16,7 @@ class Kohana_Dispatch_Request
 	 * @access	protected
 	 * @var		NULL|string
 	 */
-	protected $_path;	
+	protected $_path;
 
 	/**
 	 * Data for query string
