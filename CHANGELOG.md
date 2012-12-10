@@ -1,3 +1,10 @@
+# 0.3.0 - 12/09/2012
+
+- Upgraded to support Kohana 3.3
+- Renamed class files and directories to support PSR-0
+- Expanded test service for simple REST testing
+- All tests pass "OK (7 tests, 20 assertions)"
+
 # 0.2.0 - 2/25/2012
 
 - Created new `Dispatch_Connection` class for reusing core request configuration across requests.

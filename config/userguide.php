@@ -8,7 +8,7 @@ return array
 			'enabled'		=> TRUE,
 			'name'			=> 'Dispatch',
 			'description'	=> 'REST client supporting local and remote services.',
-			'copyright'		=> '&copy; 2011 Micheal Morgan',
+			'copyright'		=> '&copy; 2011-2012 Micheal Morgan',
 		)
 	)
 );
