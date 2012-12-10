@@ -10,7 +10,7 @@
  * @package    Kohana
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2011 Kohana Team
+ * @copyright  (c) 2008-2012 Kohana Team
  * @license    http://kohanaphp.com/license
  * @since      3.1.0
  */
@@ -37,7 +37,7 @@ class Dispatch_Kohana_Response extends Kohana_Response
 	public function __toString()
 	{
 		return (string) $this->_body;
-	}	
+	}
 	
 	/**
 	 * Gets or sets the body of the response

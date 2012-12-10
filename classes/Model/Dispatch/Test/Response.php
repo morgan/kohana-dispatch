@@ -6,10 +6,10 @@
  * @package		Dispatch
  * @category	Base
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2011 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
-class Model_Dispatch_Test extends Model
+class Model_Dispatch_Test_Response extends Model
 {
 	/**
 	 * Data
@@ -39,7 +39,7 @@ class Model_Dispatch_Test extends Model
 		if ($format === NULL)
 			return $this->_format;
 			
-		$this->_format = $format;	
+		$this->_format = $format;
 			
 		return $this;
 	}
@@ -71,7 +71,7 @@ class Model_Dispatch_Test extends Model
 		{
 			case 'json':
 				return json_encode($this->_data);
-				
+			
 			case 'php':
 				return serialize($this->_data);
 		}
