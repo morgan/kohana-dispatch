@@ -5,7 +5,7 @@
  * @package		Dispatch
  * @category	Base
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2011 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
 class Kohana_Dispatch_Request
@@ -16,7 +16,7 @@ class Kohana_Dispatch_Request
 	 * @access	protected
 	 * @var		NULL|string
 	 */
-	protected $_path;	
+	protected $_path;
 
 	/**
 	 * Data for query string
@@ -59,7 +59,7 @@ class Kohana_Dispatch_Request
 	 * @return	Dispatch_Request
 	 */
 	public static function factory()
-	{		
+	{
 		return new Dispatch_Request;
 	}
 
@@ -98,7 +98,7 @@ class Kohana_Dispatch_Request
 	{
 		if ($path === NULL)
 			return $this->_path;
-			
+		
 		if (is_array($path))
 		{
 			$path = implode('/', $path);
@@ -147,11 +147,11 @@ class Kohana_Dispatch_Request
 	 * 
 	 * @access	public
 	 * @return	$this
-	 */	
+	 */
 	public function delete()
 	{
 		return $this->execute(Request::DELETE);
-	}	
+	}
 
 	/**
 	 * Add to query string if set or return
@@ -227,17 +227,16 @@ class Kohana_Dispatch_Request
 	{
 		if ($key === NULL)
 			return $this->_headers;
-			
+		
 		if (is_array($key))
 		{
 			$this->_headers = $key;
 		}
-			
+		
 		$this->_headers[$key] = $value;
 		
 		return $this;
 	}
-	
 	
 	/**
 	 * Request
@@ -247,6 +246,13 @@ class Kohana_Dispatch_Request
 	 */
 	public function execute($method = Request::GET)
 	{
-		return $this->connection()->execute($this->path(), $method, $this->_query, $this->_data, $this->_headers);
+		return $this->connection()->execute
+		(
+			$this->path(), 
+			$method, 
+			$this->_query, 
+			$this->_data, 
+			$this->_headers
+		);
 	}
 }

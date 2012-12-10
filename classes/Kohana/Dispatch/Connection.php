@@ -5,11 +5,11 @@
  * @package		Dispatch
  * @category	Base
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2011 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
 class Kohana_Dispatch_Connection
-{	
+{
 	/**
 	 * Default connection config `dispatch.default`
 	 * 
@@ -52,18 +52,18 @@ class Kohana_Dispatch_Connection
 	 * @return	Dispatch_Connection
 	 */
 	public static function instance($name = NULL, array $config = array())
-	{		
+	{
 		static $instances;
 		
 		$name = $name ? strtolower($name) : Dispatch_Connection::$default;
 
 		if ( ! isset($instances[$name]))
-		{		
+		{
 			$config = Arr::merge(Kohana::$config->load('dispatch.' . $name), $config);
 			
 			$instances[$name] = new Dispatch_Connection($config);
 		}
-			
+		
 		return $instances[$name];
 	}
 
@@ -87,7 +87,7 @@ class Kohana_Dispatch_Connection
 	 * @return	void
 	 */
 	public function __construct(array $config = array())
-	{		
+	{
 		$this->_config = Arr::merge($this->_config, $config);
 		
 		$this->_headers =& $this->_config['headers'];
@@ -105,12 +105,12 @@ class Kohana_Dispatch_Connection
 	{
 		if ($key === NULL)
 			return $this->_headers;
-			
+		
 		if (is_array($key))
 		{
 			$this->_headers = $key;
 		}
-			
+		
 		$this->_headers[$key] = $value;
 		
 		return $this;
@@ -135,12 +135,28 @@ class Kohana_Dispatch_Connection
 		
 		if ($this->_config['attempt_local'])
 		{
-			$response = $this->_request($namespace . $path, $method, $query, $body, $headers, FALSE);
+			$response = $this->_request
+			(
+				$namespace . $path, 
+				$method, 
+				$query, 
+				$body, 
+				$headers, 
+				FALSE
+			);
 		}
 		
 		if ( ! $response)
 		{
-			$response = $this->_request($this->_config['url'] . $namespace . $path, $method, $query, $body, $headers, TRUE);
+			$response = $this->_request
+			(
+				$this->_config['url'] . $namespace . $path, 
+				$method, 
+				$query, 
+				$body, 
+				$headers, 
+				TRUE
+			);
 		}
 
 		return Dispatch_Response::factory($response);
@@ -157,9 +173,13 @@ class Kohana_Dispatch_Connection
 	{
 		try
 		{
-			$query = ( ! empty($query)) ? '?' . http_build_query($query, NULL, '&') : NULL;
+			$query = ( ! empty($query)) 
+				? '?' . http_build_query($query, NULL, '&') 
+				: NULL;
 
-			$extension = ($this->_config['extension'] !== NULL) ? '.' . $this->_config['extension'] : NULL;
+			$extension = ($this->_config['extension'] !== NULL) 
+				? '.' . $this->_config['extension'] 
+				: NULL;
 
 			$request = Request::factory($path . $extension . $query)
 				->method($method);
