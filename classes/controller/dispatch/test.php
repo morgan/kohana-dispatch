@@ -5,7 +5,7 @@
  * @package		Dispatch
  * @category	Base
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2011 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
 class Controller_Dispatch_Test extends Controller
@@ -22,17 +22,19 @@ class Controller_Dispatch_Test extends Controller
 
 		$method = Arr::get($_SERVER, 'HTTP_X_HTTP_METHOD_OVERRIDE', $this->request->method());
 
-		if (method_exists($this, $method))
+		if ($this->request->param('id'))
 		{
-			$this->request->action('action_' . $method);
+			$method = $method . '_id';
 		}
+
+		$this->request->action($method);
 		
 		if ($this->request->method() == Request::PUT)
 		{
 			parse_str($this->request->body(), $post);
 		
 			$this->request->post($post);
-		}		
+		}
 	}
 	
 	/**
@@ -43,12 +45,34 @@ class Controller_Dispatch_Test extends Controller
 	 */
 	public function action_get()
 	{
+		$model = Model::factory('dispatch_test');
+		
+		$rows = $model->get();
+		
 		$this->_render(array
 		(
-			'method'	=> Request::GET,
-			'data'		=> $this->request->query()
+			'count'		=> count($rows),
+			'rows'		=> $rows
 		));
 	}
+	
+	/**
+	 * GET dispatch/test/:id
+	 * 
+	 * @access	public
+	 * @return	void
+	 */
+	public function action_get_id()
+	{
+		$model = Model::factory('dispatch_test');
+		
+		if ($data = $model->get($this->request->param('id')))
+		{
+			$this->_render($data);
+		}
+		else
+			throw new HTTP_Exception_404;
+	}	
 
 	/**
 	 * POST dispatch/test
@@ -58,10 +82,16 @@ class Controller_Dispatch_Test extends Controller
 	 */
 	public function action_post()
 	{
+		$model = Model::factory('dispatch_test');
+		
+		$data = $model->get();
+		
+		$id = count($data) + 1;
+		
 		$this->_render(array
 		(
-			'method'	=> Request::POST,
-			'data'		=> $this->request->post()
+			'id'	=> $id,
+			'label'	=> 'Test ' . $id
 		));
 	}
 
@@ -71,13 +101,16 @@ class Controller_Dispatch_Test extends Controller
 	 * @access	public
 	 * @return	void
 	 */
-	public function action_put()
+	public function action_put_id()
 	{
-		$this->_render(array
-		(
-			'method'	=> Request::PUT,
-			'data'		=> $this->request->post()
-		));
+		$model = Model::factory('dispatch_test');
+		
+		if ($data = $model->get($this->request->param('id')))
+		{
+			$this->_render($data);
+		}
+		else
+			throw new HTTP_Exception_404;
 	}
 
 	/**
@@ -86,13 +119,16 @@ class Controller_Dispatch_Test extends Controller
 	 * @access	public
 	 * @return	void
 	 */
-	public function action_delete()
+	public function action_delete_id()
 	{
-		$this->_render(array
-		(
-			'method'	=> Request::DELETE,
-			'data'		=> $this->request->query()
-		));
+		$model = Model::factory('dispatch_test');
+		
+		if ($data = $model->get($this->request->param('id')))
+		{
+			$this->_render($data);
+		}
+		else
+			throw new HTTP_Exception_404;
 	}
 	
 	/**
@@ -106,12 +142,12 @@ class Controller_Dispatch_Test extends Controller
 	{
 		$data = ( ! is_array($data)) ? array('message' => (string) $data) : $data;
 		
-		$model = Model::factory('dispatch_test')
+		$model = Model::factory('dispatch_test_response')
 			->format($this->request->param('format'))
 			->set($data);
 		
-		$this->response->headers('content-type', File::mime_by_ext($this->request->param('format')));	
-			
+		$this->response->headers('content-type', File::mime_by_ext($this->request->param('format')));
+		
 		$status = ($code = $this->request->query('code')) ? $code : 200;
 		
 		$this->response
