@@ -23,7 +23,7 @@ class Kohana_DispatchTest extends Unittest_TestCase
 		'namespace'		=> 'dispatch',
 		'extension' 	=> 'json'
 	);
-	
+
 	/**
 	 * Provider for test_path
 	 *
@@ -111,7 +111,7 @@ class Kohana_DispatchTest extends Unittest_TestCase
 	 * @dataProvider	provider_config
 	 * @access			public
 	 * @return			void
-	 */
+	 */	
 	public function test_http_code($config)
 	{
 		$dispatch = Dispatch::factory('test', Dispatch_Connection::factory($config));
@@ -133,14 +133,11 @@ class Kohana_DispatchTest extends Unittest_TestCase
 	 * @access	public
 	 * @return	void
 	 */
-	public function test_pass_through()
+	public function test_pass_through()	
 	{
-		$dispatch_connection = Dispatch_Connection::factory
-		(
-			$this->_config + array('attempt_local' => TRUE)
-		);
+		$connection = Dispatch_Connection::factory($this->_config + array('attempt_local' => TRUE));
 
-		$dispatch = Dispatch::factory('test', $dispatch_connection);
+		$dispatch = Dispatch::factory('test', $connection);
 		
 		$result = $dispatch->execute();
 		
@@ -163,7 +160,7 @@ class Kohana_DispatchTest extends Unittest_TestCase
 	 * @dataProvider	provider_config
 	 * @access			public
 	 * @return			void
-	 */
+	 */	
 	public function test_request($config)
 	{
 		$calls = array
@@ -174,7 +171,7 @@ class Kohana_DispatchTest extends Unittest_TestCase
 			array(Request::PUT, 'test/1'),
 			array(Request::DELETE, 'test/1')
 		);
-		
+	
 		$connection = Dispatch_Connection::factory($config);
 		
 		foreach ($calls as $call)

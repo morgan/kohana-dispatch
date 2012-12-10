@@ -45,7 +45,7 @@ class Controller_Dispatch_Test extends Controller
 	 */
 	public function action_get()
 	{
-		$model = Model::factory('dispatch_test');
+		$model = Model::factory('Dispatch_Test');
 		
 		$rows = $model->get();
 		
@@ -64,7 +64,7 @@ class Controller_Dispatch_Test extends Controller
 	 */
 	public function action_get_id()
 	{
-		$model = Model::factory('dispatch_test');
+		$model = Model::factory('Dispatch_Test');
 		
 		if ($data = $model->get($this->request->param('id')))
 		{
@@ -82,7 +82,7 @@ class Controller_Dispatch_Test extends Controller
 	 */
 	public function action_post()
 	{
-		$model = Model::factory('dispatch_test');
+		$model = Model::factory('Dispatch_Test');
 		
 		$data = $model->get();
 		
@@ -103,7 +103,7 @@ class Controller_Dispatch_Test extends Controller
 	 */
 	public function action_put_id()
 	{
-		$model = Model::factory('dispatch_test');
+		$model = Model::factory('Dispatch_Test');
 		
 		if ($data = $model->get($this->request->param('id')))
 		{
@@ -121,7 +121,7 @@ class Controller_Dispatch_Test extends Controller
 	 */
 	public function action_delete_id()
 	{
-		$model = Model::factory('dispatch_test');
+		$model = Model::factory('Dispatch_Test');
 		
 		if ($data = $model->get($this->request->param('id')))
 		{
@@ -147,7 +147,7 @@ class Controller_Dispatch_Test extends Controller
 			->set($data);
 		
 		$this->response->headers('content-type', File::mime_by_ext($this->request->param('format')));
-		
+			
 		$status = ($code = $this->request->query('code')) ? $code : 200;
 		
 		$this->response

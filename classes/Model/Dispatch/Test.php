@@ -6,7 +6,7 @@
  * @package		Dispatch
  * @category	Base
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2011 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
 class Model_Dispatch_Test extends Model
@@ -17,32 +17,19 @@ class Model_Dispatch_Test extends Model
 	 * @access	protected
 	 * @var		array
 	 */
-	protected $_data = array();
-	
-	/**
-	 * Format
-	 * 
-	 * @access	protected
-	 * @var		string
-	 */
-	protected $_format = 'json';
-	
-	/**
-	 * Setter/getter for format
-	 * 
-	 * @access	public
-	 * @param	NULL|string
-	 * @return	$this|string
-	 */
-	public function format($format)
-	{
-		if ($format === NULL)
-			return $this->_format;
-			
-		$this->_format = $format;	
-			
-		return $this;
-	}
+	protected $_data = array
+	(
+		array
+		(
+			'id'	=> 1,
+			'label' => 'Test 1'
+		),
+		array
+		(	
+			'id'	=> 2,
+			'label' => 'Test 2'
+		)
+	);
 	
 	/**
 	 * Set data
@@ -63,41 +50,15 @@ class Model_Dispatch_Test extends Model
 	 * 
 	 * @access	public
 	 * @return	string
-	 * @throws	Kohana_Exception
 	 */
-	public function get()
+	public function get($id = NULL)
 	{
-		switch ($this->_format)
-		{
-			case 'json':
-				return json_encode($this->_data);
-				
-			case 'php':
-				return serialize($this->_data);
-		}
-
-		throw new Kohana_Exception('Unsupported format: ' . $this->_format);
-	}
-	
-	/**
-	 * Get data as array
-	 * 
-	 * @access	public
-	 * @return	array
-	 */
-	public function as_array()
-	{
-		return $this->_data;
-	}
-	
-	/**
-	 * Convert to string based on desired format
-	 * 
-	 * @access	public
-	 * @return	string
-	 */
-	public function __toString()
-	{
-		return $this->get();
+		if ($id === NULL)
+			return $this->_data;
+		
+		if (isset($this->_data[--$id]))
+			return $this->_data[$id];
+			
+		return FALSE;
 	}
 }

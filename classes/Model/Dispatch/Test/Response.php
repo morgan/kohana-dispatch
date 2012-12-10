@@ -71,7 +71,7 @@ class Model_Dispatch_Test_Response extends Model
 		{
 			case 'json':
 				return json_encode($this->_data);
-				
+			
 			case 'php':
 				return serialize($this->_data);
 		}
