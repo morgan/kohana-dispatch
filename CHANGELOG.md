@@ -3,6 +3,7 @@
 - Upgraded to support Kohana 3.3
 - Renamed class files and directories to support PSR-0
 - Expanded test service for simple REST testing
+- Added additional unit test coverage
 - All tests pass "OK (7 tests, 20 assertions)"
 
 # 0.2.0 - 2/25/2012
