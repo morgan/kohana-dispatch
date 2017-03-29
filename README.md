@@ -1,3 +1,7 @@
+:warning: **Notice**: The Kohana Framework announced official retirement on 07/01/2017. Therefore, this repository is no longer maintained.
+
+----
+
 # Dispatch Module
 
 A REST client for Kohana. 
@@ -11,8 +15,7 @@ expanded response parsing (XML, YAML, JSON, PHP)
 
 ## Getting Started
 
-Recommend starting out with Dispatch documentation using the User Guide module or available 
-online at: http://dev.morgan.ly/kohana/v3.3/guide/dispatch/.
+Recommend starting out with Dispatch documentation using the User Guide module.
 
 ## Learning & References
 
